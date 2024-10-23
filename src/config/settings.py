@@ -1,9 +1,9 @@
-from pydantic_settings import BaseSettings
+from pydantic import BaseModel
 from typing import Dict
 from exception import NotFoundException
 
 
-class Settings(BaseSettings):
+class Settings(BaseModel):
 
     DEBUG: bool = True
     LOG_LEVEL: str = "INFO"
