@@ -11,7 +11,7 @@ WORKDIR /app
 
 COPY ./requirements.txt .
 
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
 COPY ./src /app
 
