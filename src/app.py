@@ -35,6 +35,15 @@ routerV1.include_router(incoming)
 app.include_router(routerV1, prefix='/v1')
 
 
+routerMain = APIRouter()
+
+@routerMain.get("/ping")
+async def ping():
+    return JSONResponse(status_code=200, content={"error": False, "message": "OK"})
+
+app.include_router(routerMain)
+
+
 @app.exception_handler(NotFoundException)
 async def notfound_handler(request: Request, e: NotFoundException):
     return JSONResponse(status_code=e.status, content={"error": True, "message": e.message, "data": None})
