@@ -20,4 +20,3 @@ class Alert(BaseModel):
 
 class AlertmanagerIncoming(BaseModel):
     alerts: List[Alert]
-    token: str

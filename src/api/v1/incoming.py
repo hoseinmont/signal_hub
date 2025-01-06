@@ -11,11 +11,13 @@ router = APIRouter()
 @router.post("/alertmanager")
 async def alertmanager(
     request: Request,
-    alertmanagerIncoming: AlertmanagerIncoming,
+    alertmanager_incoming: AlertmanagerIncoming,
 ):
-    out_coming_config = settings.get_out_coming_config('alertmanager', alertmanagerIncoming.token)
+    token: str = request.query_params.get('token')
 
-    converter_class = Converter(out_coming_config, alertmanagerIncoming)
+    out_coming_config = settings.get_out_coming_config('alertmanager', token)
+
+    converter_class = Converter(out_coming_config, alertmanager_incoming)
     function_name = f"from_alertmanager_to_{out_coming_config['to']}"
 
     # run function ------
