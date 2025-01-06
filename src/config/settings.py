@@ -1,18 +1,18 @@
-from pydantic import BaseModel
+from pydantic_settings import BaseSettings
 from typing import Dict
 from exception import NotFoundException
 import json
 import io
 
 
-class Settings(BaseModel):
+class Settings(BaseSettings):
 
     DEBUG: bool = True
     LOG_LEVEL: str = "INFO"
     SENTRY_DSN: str = ""
     APP_TITLE: str = "signal_hub"
 
-    CONFIG_FILE_PATH: str = None
+    CONFIG_FILE_PATH: str = ""
 
     ITO: Dict = {
         "token1": {
@@ -44,7 +44,7 @@ class Settings(BaseModel):
     def __init__(self):
         super().__init__()
 
-        if self.CONFIG_FILE_PATH is not None:
+        if self.CONFIG_FILE_PATH != "":
             with io.open(self.CONFIG_FILE_PATH, 'r', encoding='utf-8') as config_file:
                 self.ITO = json.loads(config_file.read())
 
