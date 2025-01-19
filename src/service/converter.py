@@ -14,11 +14,18 @@ class Converter:
 
     def from_alertmanager_to_telegram(self):
         for alert in self.data.alerts:
-            message = f"""
-status: {alert.status}
+            l = '🟢'
+            if alert.status == 'firing':
+                l = '🔴'
+
+            message = f"""{l}
+
 alertname: {alert.labels.alertname}
+status: {alert.status}
 severity: {alert.labels.severity}
 description: {alert.annotations.description}
+
+{l}
 """
 
             TelegramOutComing().send(TelegramOutComingSchema(
