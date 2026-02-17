@@ -1,6 +1,7 @@
 from .outcoming_structure import OutComingStructure
 from schema import TelegramOutComingSchema
 import requests
+from fastapi.responses import JSONResponse
 
 
 class TelegramOutComing(OutComingStructure):
@@ -13,8 +14,20 @@ class TelegramOutComing(OutComingStructure):
         }
         headers = {
             "accept": "application/json",
-            "User-Agent": "Mont",
+            "User-Agent": "basalam-alert",
             "content-type": "application/json"
         }
-        response = requests.post(url, json=payload, headers=headers)
+        try:
+            response = requests.post(url, json=payload, headers=headers, timeout=5)
+            response.raise_for_status()
+            return response.json()
+        except requests.exceptions.Timeout:
+            return JSONResponse(
+                status_code=500,
+                content={
+                    "error": True,
+                    "message": "Telegram Timeout",
+                    "data": None
+                }
+            )
 
