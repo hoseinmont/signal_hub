@@ -16,3 +16,4 @@ RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 COPY ./src /app
 
 CMD ["fastapi", "run", "/app/app.py", "--port", "80"]
+
