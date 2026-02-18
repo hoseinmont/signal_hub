@@ -1,6 +1,7 @@
 from .telegram_out_coming import TelegramOutComing
 from .discord_out_coming import DiscordOutComing
-from schema import TelegramOutComingSchema, DiscordOutComingSchema
+from .sms_asiatech_out_coming import SmsAsiatechOutComing
+from schema import TelegramOutComingSchema, DiscordOutComingSchema, SmsAsiatechOutComingSchema
 from typing import Dict
 
 
@@ -57,18 +58,31 @@ description: {alert.annotations.description}
 
             message = f"""{l}
 
-        alertname: {alert.labels.alertname}
-        status: {alert.status}
-        severity: {alert.labels.severity}
-        description: {alert.annotations.description}
+alertname: {alert.labels.alertname}
+status: {alert.status}
+severity: {alert.labels.severity}
+description: {alert.annotations.description}
+Link: {self.data.alert_group.permalinks.web}
 
-        {l}
-        """
+{l}
+"""
 
             TelegramOutComing().send(TelegramOutComingSchema(
                 message=message,
                 token=self.out_coming_config['telegram_token'],
                 chat_id=self.out_coming_config['chat_id'],
+            ))
+
+
+    def from_grafana_oncall_to_smsapi_asiatech(self):
+        for alert in self.data.alert_payload.alerts:
+            message = f"Alert {alert.labels.alertname}: {alert.annotations.description}"
+
+            SmsAsiatechOutComing().send(SmsAsiatechOutComingSchema(
+                message=message,
+                api_key=self.out_coming_config['api_key'],
+                sender_number=self.out_coming_config['sender_number'],
+                to_number=self.out_coming_config['to_number'],
             ))
 
 

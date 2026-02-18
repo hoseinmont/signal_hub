@@ -62,10 +62,11 @@ async def grafana_oncall(
     request: Request,
     schema: GrafanaOncallInComingSchema,
 ):
-    print(schema)
     token: str = request.query_params.get('token')
+    to_number: str = request.query_params.get('to_number')
 
     out_coming_config = settings.get_out_coming_config('grafana-oncall', token)
+    out_coming_config['to_number'] = to_number
 
     converter_class = Converter(out_coming_config, schema)
     function_name = f"from_grafana_oncall_to_{out_coming_config['to']}"
