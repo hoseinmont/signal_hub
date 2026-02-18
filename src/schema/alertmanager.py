@@ -3,13 +3,13 @@ from typing import List, Optional
 
 
 class Label(BaseModel):
-    alertname: str
-    severity: str
+    alertname: Optional[str] = None
+    severity: Optional[str] = None
 
 
 class Annotation(BaseModel):
-    description: Optional[str]
-    summary: Optional[str]
+    description: Optional[str] = None
+    summary: Optional[str] = None
 
 
 class Alert(BaseModel):
