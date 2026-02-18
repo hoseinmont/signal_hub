@@ -47,3 +47,8 @@ description: {alert.annotations.description}
             token=self.out_coming_config['webhook_token'],
             webhook_id=self.out_coming_config['webhook_id'],
         ))
+
+
+    def from_grafana_oncall_to_telegram(self):
+        print(self.data)
+
