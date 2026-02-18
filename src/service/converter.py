@@ -50,5 +50,26 @@ description: {alert.annotations.description}
 
 
     def from_grafana_oncall_to_telegram(self):
-        print(self.data)
+        for alert in self.data.alert_payload.alerts:
+            l = '🟢'
+            if alert.status == 'firing':
+                l = '🔴'
+
+            message = f"""{l}
+
+        alertname: {alert.labels.alertname}
+        status: {alert.status}
+        severity: {alert.labels.severity}
+        description: {alert.annotations.description}
+
+        {l}
+        """
+
+            TelegramOutComing().send(TelegramOutComingSchema(
+                message=message,
+                token=self.out_coming_config['telegram_token'],
+                chat_id=self.out_coming_config['chat_id'],
+            ))
+
+
 
