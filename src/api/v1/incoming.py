@@ -62,6 +62,7 @@ async def grafana_oncall(
     request: Request,
     schema: GrafanaOncallInComingSchema,
 ):
+    print(schema)
     token: str = request.query_params.get('token')
 
     out_coming_config = settings.get_out_coming_config('grafana-oncall', token)

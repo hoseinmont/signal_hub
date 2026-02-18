@@ -8,8 +8,9 @@ class Label(BaseModel):
 
 
 class Annotation(BaseModel):
-    description: Optional[str] = None
+    title: Optional[str] = None
     summary: Optional[str] = None
+    description: Optional[str] = None
 
 
 class Alert(BaseModel):

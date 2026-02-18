@@ -1,6 +1,7 @@
-from pydantic import BaseModel
+from typing import Optional
 
+from pydantic import BaseModel
+from .alertmanager import AlertmanagerIncoming
 
 class GrafanaOncallInComingSchema(BaseModel):
-    pass
-
+    alert_payload: Optional[AlertmanagerIncoming]
