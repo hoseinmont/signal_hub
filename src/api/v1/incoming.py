@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from schema import AlertmanagerIncoming, WebhookIncoming, GrafanaOncallInComingSchema
 from service import Converter
 from config import settings
-
+from utils import logger
 
 router = APIRouter()
 
@@ -66,14 +66,30 @@ async def grafana_oncall(
 
     out_coming_config = settings.get_out_coming_config('grafana-oncall', token)
 
-    print(schema)
-
     converter_class = Converter(out_coming_config, schema)
     function_name = f"from_grafana_oncall_to_{out_coming_config['to']}"
 
     # run function ------
     func = getattr(converter_class, function_name)
     result = func()
+
+    return JSONResponse(
+        status_code=200,
+        content={
+            "error": False,
+            "message": "Successful",
+            "data": None
+        }
+    )
+
+
+@router.post("/stdout")
+async def stdout(
+    request: Request,
+):
+    body = await request.json()
+    print(body)
+    logger.info(body)
 
     return JSONResponse(
         status_code=200,
