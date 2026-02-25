@@ -66,7 +66,7 @@ class Settings(BaseSettings):
             raise NotFoundException("Out Going config not found.")
 
     def get_out_coming_config_v2(self, token: str, outgoing: str):
-        if token in self.ITO_V2 and outgoing in self.ITO[token]:
+        if token in self.ITO_V2 and outgoing in self.ITO_V2[token]:
             return self.ITO_V2[token][outgoing]
         else:
             raise NotFoundException("Out Going config not found.")
