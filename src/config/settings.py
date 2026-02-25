@@ -41,12 +41,19 @@ class Settings(BaseSettings):
         }
     }
 
+    ITO_V2: Dict = {}
+
     def __init__(self):
         super().__init__()
 
         if self.CONFIG_FILE_PATH != "":
             with io.open(self.CONFIG_FILE_PATH, 'r', encoding='utf-8') as config_file:
                 self.ITO = json.loads(config_file.read())
+
+        if self.CONFIG_FILE_PATH_V2 != "":
+            with io.open(self.CONFIG_FILE_PATH_V2, 'r', encoding='utf-8') as config_file:
+                self.ITO_V2 = json.loads(config_file.read())
+
 
     class Config:
         case_sensitive = True
@@ -55,7 +62,13 @@ class Settings(BaseSettings):
         if token in self.ITO and incoming in self.ITO[token]:
             return self.ITO[token][incoming]
         else:
-            raise NotFoundException("Out coming config not found.")
+            raise NotFoundException("Out Going config not found.")
+
+    def get_out_coming_config_v2(self, token: str, outgoing: str):
+        if token in self.ITO_V2 and outgoing in self.ITO[token]:
+            return self.ITO_V2[token][outgoing]
+        else:
+            raise NotFoundException("Out Going config not found.")
 
 
 settings = Settings()

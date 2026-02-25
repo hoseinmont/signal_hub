@@ -8,6 +8,7 @@ from starlette.middleware.cors import CORSMiddleware
 from exception import NotFoundException, UnauthorizedException
 
 from api.v1.incoming import router as incoming
+from api.v2.incoming import router as incoming_v2
 
 if not settings.DEBUG:
     import sentry_sdk
@@ -32,7 +33,11 @@ app.add_middleware(
 routerV1 = APIRouter()
 routerV1.include_router(incoming)
 
+routerV2 = APIRouter()
+routerV2.include_router(incoming_v2)
+
 app.include_router(routerV1, prefix='/v1')
+app.include_router(routerV2, prefix='/v2')
 
 
 routerMain = APIRouter()

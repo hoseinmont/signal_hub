@@ -49,7 +49,6 @@ description: {alert.annotations.description}
             webhook_id=self.out_coming_config['webhook_id'],
         ))
 
-
     def from_grafana_oncall_to_telegram(self):
         for alert in self.data.alert_payload.alerts:
             l = '🟢'
@@ -73,8 +72,7 @@ Link: {self.data.alert_group.permalinks.web}
                 chat_id=self.out_coming_config['chat_id'],
             ))
 
-
-    def from_grafana_oncall_to_smsapi_asiatech(self):
+    def from_grafana_oncall_to_sms_api_asiatech(self):
         for alert in self.data.alert_payload.alerts:
             message = f"Alert {alert.labels.alertname}: {alert.annotations.description}"
 
@@ -82,7 +80,7 @@ Link: {self.data.alert_group.permalinks.web}
                 message=message,
                 api_key=self.out_coming_config['api_key'],
                 sender_number=self.out_coming_config['sender_number'],
-                to_number=self.out_coming_config['to_number'],
+                to_number=self.out_coming_config['value'],
             ))
 
 
