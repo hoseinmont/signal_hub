@@ -69,7 +69,7 @@ Link: {self.data.alert_group.permalinks.web}
             TelegramOutComing().send(TelegramOutComingSchema(
                 message=message,
                 token=self.out_coming_config['telegram_token'],
-                chat_id=self.out_coming_config['chat_id'],
+                chat_id=self.out_coming_config['value'],
             ))
 
     def from_grafana_oncall_to_sms_api_asiatech(self):
