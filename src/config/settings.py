@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     APP_TITLE: str = "signal_hub"
 
     CONFIG_FILE_PATH: str = ""
+    CONFIG_FILE_PATH_V2: str = ""
 
     ITO: Dict = {
         "token1": {
